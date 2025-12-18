@@ -1,6 +1,6 @@
 import './style.css';
 
-async function getData(poke) {
+/* async function getData(poke) {
     try {
         //go get data
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${poke}`);
@@ -8,16 +8,37 @@ async function getData(poke) {
             throw new Error(response);
         } else {
             const data = await response.json(); // Makes respons into json data we can use
-            console.log(data);
-            document.getElementById("api-response").textContent = data.name;
+            console.log(data.sprites[front_default]);
+            document.getElementById("pokeSprite").src = data.sprites[front_default];
         }
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 }
 
-getData('pikachu');
+getData('pikachu'); */
 
-data.results.forEach(item => {
-    console.log(item.name);
-});
+async function randomPoke() {
+    let randomId = Math.floor(Math.random() * 1350);
+    try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.status}`);
+        } else {
+            const data = await response.json();
+            console.log(data);
+        }
+    } catch (error) {
+        console.error('Error fetching random Pokemon:', error);
+    }
+}
+
+
+async function loadPoke() {
+    let currentpoke = randomPoke();
+
+    console.log(currentpoke);
+    document.getElementById("pokeSprite").src = `${currentpoke.sprites.front_default}`;
+    console.log(currentpoke.sprites.front_default)
+}
+
