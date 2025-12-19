@@ -19,14 +19,14 @@ import './style.css';
 getData('pikachu'); */
 
 async function randomPoke() {
-    let randomId = Math.floor(Math.random() * 1350);
+    let randomId = Math.floor(Math.random() * 1025);
     try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
         if (!response.ok) {
             throw new Error(`Network response was not ok: ${response.status}`);
         } else {
             const data = await response.json();
-            console.log(data);
+            return(data);
         }
     } catch (error) {
         console.error('Error fetching random Pokemon:', error);
@@ -35,10 +35,15 @@ async function randomPoke() {
 
 
 async function loadPoke() {
-    let currentpoke = randomPoke();
+    const currentpoke = await randomPoke();
 
-    console.log(currentpoke);
-    document.getElementById("pokeSprite").src = `${currentpoke.sprites.front_default}`;
-    console.log(currentpoke.sprites.front_default)
+    if (!currentpoke) {
+        return;
+    } else {
+        document.getElementById("pokeSprite").src = currentpoke.sprites.front_default;
+    }
+
 }
+
+loadPoke()
 
