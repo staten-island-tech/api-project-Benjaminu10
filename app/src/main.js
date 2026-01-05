@@ -41,9 +41,36 @@ async function loadPoke() {
         return;
     } else {
         document.getElementById("pokeSprite").src = currentpoke.sprites.front_default;
+        console.log(currentpoke);
     }
 
 }
 
-loadPoke()
+function setupTitleScreen() {
+    document.addEventListener("keydown", (event) => {
+    const app = document.getElementById("app")
+    const selectScreen = document.getElementById("select")
 
+    if (
+        app &&
+        !app.classList.contains("hidden") &&
+        event.key === "Enter"
+    ) {
+        if (selectScreen) app.classList.add("hidden");
+        selectScreen.classList.remove("hidden");
+        //START GAME HERE
+    }
+});
+}
+
+function setupBlurButton() {
+    const blur = document.getElementById("blurButton");
+    blur.addEventListener("click", () => {
+        document.getElementById("select").classList.add("hidden");
+        document.getElementById("blur").classList.remove("hidden");
+    });
+}
+
+loadPoke()
+setupBlurButton()
+setupTitleScreen()

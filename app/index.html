@@ -6,10 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>app</title>
   </head>
-  <body class="bg-red-200">
-    <div id="app"></div>
+  <body class="">
+    <div id="app">
+      <h1 id="title" class="text-center">Whos That Pokemon?</h1>
+    </div>
     <h2 class="text-3xl font-bold underline" id="api-response"></h2>
-    <img src="" alt="" id="pokeSprite" class="w-150 brightness-0">
+    <div id="select" class="hidden">
+      <h1 id="title">Whos That Pokemon?</h1>
+        <div id="buttonContainer">
+          <button id="blurButton">Blur</button>
+          <button>Blackout</button>
+          <button>Facts</button>
+        </div>
+    </div>
+    <div id="blur" class="hidden">
+      <img src="" alt="" id="pokeSprite" class="w-150 blur-xl ">
+    </div>
+    <div id="blackout" class="hidden">
+      <img src="" alt="" id="pokeSprite" class="brightness-0">
+    </div>
+    <div id="fact" class="hidden">
+      <h1>test</h1>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
