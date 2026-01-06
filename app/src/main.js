@@ -34,13 +34,13 @@ async function randomPoke() {
 }
 
 
-async function loadPoke() {
+async function loadPoke(id, spriteType) {
     const currentpoke = await randomPoke();
 
     if (!currentpoke) {
         return;
     } else {
-        document.getElementById("pokeSprite").src = currentpoke.sprites.front_default;
+        document.getElementById(`${id}`).src = currentpoke.sprites[spriteType] || currentpoke.sprites.front_default;
         console.log(currentpoke);
     }
 
@@ -68,9 +68,39 @@ function setupBlurButton() {
     blur.addEventListener("click", () => {
         document.getElementById("select").classList.add("hidden");
         document.getElementById("blur").classList.remove("hidden");
+        loadPoke("pokeSprite")
     });
 }
 
-loadPoke()
+function setupBlackoutButton() {
+    const blackout = document.getElementById("blackoutButton")
+    blackout.addEventListener("click", () => {
+        document.getElementById("select").classList.add("hidden");
+        document.getElementById("blackout").classList.remove("hidden");
+        loadPoke("pokeSprite2")
+    })
+}
+
+function setupBlurButton2() {
+    const blur = document.getElementById("bblurButton");
+    blur.addEventListener("click", () => {
+        document.getElementById("select").classList.add("hidden");
+        document.getElementById("backBlur").classList.remove("hidden");
+        loadPoke("pokeSprite3", "back_default")
+    });
+}
+
+function setupBlackoutButton2() {
+    const blackout = document.getElementById("bblackoutButton")
+    blackout.addEventListener("click", () => {
+        document.getElementById("select").classList.add("hidden");
+        document.getElementById("backBlackout").classList.remove("hidden");
+        loadPoke("pokeSprite4", "back_default")
+    })
+}
+
 setupBlurButton()
+setupBlackoutButton()
+setupBlurButton2()
+setupBlackoutButton2()
 setupTitleScreen()

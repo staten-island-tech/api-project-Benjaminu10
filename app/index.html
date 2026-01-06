@@ -13,20 +13,25 @@
     <h2 class="text-3xl font-bold underline" id="api-response"></h2>
     <div id="select" class="hidden">
       <h1 id="title">Whos That Pokemon?</h1>
-        <div id="buttonContainer">
+        <div id="buttonContainer" class="flex flex-wrap">
           <button id="blurButton">Blur</button>
-          <button>Blackout</button>
-          <button>Facts</button>
+          <button id="blackoutButton">Blackout</button>
+          <button id="bblurButton">Back Blur</button>
+          <button id="bblackoutButton">Back Blackout</button>
+          <button id="criesButton">Cries</button>
         </div>
     </div>
     <div id="blur" class="hidden">
-      <img src="" alt="" id="pokeSprite" class="w-150 blur-xl ">
+      <img src="" alt="" id="pokeSprite" class="w-150 blur-2xl ">
     </div>
     <div id="blackout" class="hidden">
-      <img src="" alt="" id="pokeSprite" class="brightness-0">
+      <img src="" alt="" id="pokeSprite2" class="w-150 brightness-0">
     </div>
-    <div id="fact" class="hidden">
-      <h1>test</h1>
+    <div id="backBlur" class="hidden">
+      <img src="" alt="" id="pokeSprite3" class="w-150 blur-xl ">
+    </div>
+    <div id="backBlackout" class="hidden">
+      <img src="" alt="" id="pokeSprite4" class="w-150 brightness-0">
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>
