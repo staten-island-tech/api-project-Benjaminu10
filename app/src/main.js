@@ -46,6 +46,18 @@ async function loadPoke(id, spriteType) {
 
 }
 
+async function loadCry(id) {
+    const currentpoke = await randomPoke();
+
+    if (!currentpoke) {
+        return;
+    } else {
+        document.getElementById(`${id}`).src = currentpoke.cries.latest;
+        console.log(currentpoke);
+    }
+
+}
+
 function setupTitleScreen() {
     document.addEventListener("keydown", (event) => {
     const app = document.getElementById("app")
@@ -99,8 +111,18 @@ function setupBlackoutButton2() {
     })
 }
 
+function setupCriesButton() {
+    const cries = document.getElementById("criesButton")
+    cries.addEventListener("click", () => {
+        document.getElementById("select").classList.add("hidden");
+        document.getElementById("cries").classList.remove("hidden");
+        loadCry("criesAudio")
+    })
+}
+
 setupBlurButton()
 setupBlackoutButton()
 setupBlurButton2()
 setupBlackoutButton2()
+setupCriesButton()
 setupTitleScreen()
