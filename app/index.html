@@ -7,17 +7,27 @@
     <title>app</title>
   </head>
   <body class="">
-    <div id="app"></div>
-        <h1 class="text-9xl m-10 text-center font- [press-start-2p]">Who's That</h1>
-        <h1 class="text-8xl customFont text-center">Pokemon?</h1>
-    <div class="" id="startScreen">
-      <h2>Presss ENTER to Start</h2>
+    <div id="app">
+      <h1 id="title" class="text-center">Whos That Pokemon?</h1>
     </div>
-    <div class = "hidden"id="gameOptions">
-      <button id="sillhouete">test</button>
-      <img src="" alt="" class="brightness-0 w-100" id="pokeSprite">
+    <h2 class="text-3xl font-bold underline" id="api-response"></h2>
+    <div id="select" class="hidden">
+      <h1 id="title">Whos That Pokemon?</h1>
+        <div id="buttonContainer">
+          <button id="blurButton">Blur</button>
+          <button>Blackout</button>
+          <button>Facts</button>
+        </div>
     </div>
-
+    <div id="blur" class="hidden">
+      <img src="" alt="" id="pokeSprite" class="w-150 blur-xl ">
+    </div>
+    <div id="blackout" class="hidden">
+      <img src="" alt="" id="pokeSprite" class="brightness-0">
+    </div>
+    <div id="fact" class="hidden">
+      <h1>test</h1>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

@@ -26,7 +26,7 @@ async function randomPoke() {
             throw new Error(`Network response was not ok: ${response.status}`);
         } else {
             const data = await response.json();
-            return data;
+            return(data);
         }
     } catch (error) {
         console.error('Error fetching random Pokemon:', error);
@@ -35,27 +35,42 @@ async function randomPoke() {
 
 
 async function loadPoke() {
-    try {
-        const currentPoke = await randomPoke();
-        console.log(currentPoke);
+    const currentpoke = await randomPoke();
 
-        document.getElementById("pokeSprite").src =
-            currentPoke.sprites.front_default;
-
-    } catch (error) {
-        console.error('Error fetching random Pokemon:', error);
+    if (!currentpoke) {
+        return;
+    } else {
+        document.getElementById("pokeSprite").src = currentpoke.sprites.front_default;
+        console.log(currentpoke);
     }
+
 }
 
-document.addEventListener("keydown", (event) => {
-    const start = document.getElementById("startScreen");
-    const game = document.getElementById("gameOptions")
-    if (event.key === "Enter" && !start.classList.contains("hidden")) {
-        start.classList.add("hidden");
-        game.classList.remove("hidden");
-        loadPoke();
+function setupTitleScreen() {
+    document.addEventListener("keydown", (event) => {
+    const app = document.getElementById("app")
+    const selectScreen = document.getElementById("select")
+
+    if (
+        app &&
+        !app.classList.contains("hidden") &&
+        event.key === "Enter"
+    ) {
+        if (selectScreen) app.classList.add("hidden");
+        selectScreen.classList.remove("hidden");
+        //START GAME HERE
     }
-})
+});
+}
 
+function setupBlurButton() {
+    const blur = document.getElementById("blurButton");
+    blur.addEventListener("click", () => {
+        document.getElementById("select").classList.add("hidden");
+        document.getElementById("blur").classList.remove("hidden");
+    });
+}
 
-
+loadPoke()
+setupBlurButton()
+setupTitleScreen()
