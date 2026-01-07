@@ -111,6 +111,29 @@ function setupBlackoutButton2() {
     })
 }
 
+//
+
+const pokemon = {
+}
+
+async function pokeList() {
+    console.log('pokeList called');
+    try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1025`);
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.status}`);
+        } else {
+            const data = await response.json();
+            const list = data.results.map(pokemon => pokemon.name);
+            console.log(list);
+        }
+    } catch (error) {
+        console.error('Error fetching random Pokemon:', error);
+    }
+}
+const searchInput = document.getElementById(".search")
+
+
 function setupCriesButton() {
     const cries = document.getElementById("criesButton")
     cries.addEventListener("click", () => {
@@ -126,3 +149,4 @@ setupBlurButton2()
 setupBlackoutButton2()
 setupCriesButton()
 setupTitleScreen()
+pokeList()
