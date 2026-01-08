@@ -113,8 +113,7 @@ function setupBlackoutButton2() {
 
 //
 
-const pokemon = {
-}
+let pokemonList = [];
 
 async function pokeList() {
     console.log('pokeList called');
@@ -124,14 +123,41 @@ async function pokeList() {
             throw new Error(`Network response was not ok: ${response.status}`);
         } else {
             const data = await response.json();
-            const list = data.results.map(pokemon => pokemon.name);
-            console.log(list);
+            pokemonList = data.results.map(pokemon => pokemon.name);
+            console.log(pokemonList);
         }
     } catch (error) {
         console.error('Error fetching random Pokemon:', error);
     }
 }
-const searchInput = document.getElementById(".search")
+
+const searchInput = document.getElementById("search")
+const suggestions = document.getElementById("suggestions")
+
+searchInput.addEventListener("keyup", () => {
+    const query = searchInput.value.toLowerCase();
+    suggestions.innerHTML = "";
+
+    if (!query) return;
+
+    const matches = pokemonList
+        .filter(name => name.startsWith(query))
+        .slice(0, 1025);
+    
+    matches.forEach(name => {
+        const li = document.createElement("li");
+        li.textContent = name;
+        li.className = "cursor-pointer";
+
+        li.addEventListener("click", () => {
+            searchInput.value = name;
+            suggestions.innerHTML = "";
+        })
+
+        suggestions.appendChild(li);
+    })
+
+})
 
 
 function setupCriesButton() {
