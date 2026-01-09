@@ -131,18 +131,21 @@ async function pokeList() {
     }
 }
 
-const searchInput = document.getElementById("search")
-const suggestions = document.getElementById("suggestions")
+const searchInputs = document.querySelectorAll(".search")
+const suggestionLists = document.querySelectorAll(".suggestions")
 
-searchInput.addEventListener("keyup", () => {
-    const query = searchInput.value.toLowerCase();
+searchInputs.forEach((input, index) => {
+    const suggestions = suggestionLists[index]
+
+    input.addEventListener("keyup", () => {
+    const query = input.value.toLowerCase();
     suggestions.innerHTML = "";
 
     if (!query) return;
 
     const matches = pokemonList
         .filter(name => name.startsWith(query))
-        .slice(0, 1025);
+        .slice(0, 10);
     
     matches.forEach(name => {
         const li = document.createElement("li");
@@ -150,7 +153,7 @@ searchInput.addEventListener("keyup", () => {
         li.className = "cursor-pointer";
 
         li.addEventListener("click", () => {
-            searchInput.value = name;
+            input.value = name;
             suggestions.innerHTML = "";
         })
 
@@ -159,6 +162,7 @@ searchInput.addEventListener("keyup", () => {
 
 })
 
+})
 
 function setupCriesButton() {
     const cries = document.getElementById("criesButton")
