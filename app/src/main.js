@@ -42,13 +42,16 @@ async function randomPoke() {
 
 
 async function loadPoke(id, spriteType) {
-    if (!currentpoke) {
+    if (!currentpoke) return;
+
+    const spriteUrl = currentpoke.sprites[spriteType] || currentpoke.sprites.front_default;
+
+    if (!spriteUrl) {
+        document.getElementById(id).src = ""
         return;
-    } else {
-        document.getElementById(`${id}`).src = currentpoke.sprites[spriteType] || currentpoke.sprites.front_default;
-        console.log(currentpoke);
     }
 
+    document.getElementById(id).src = spriteUrl;
 }
 
 function setupTitleScreen() {
@@ -81,9 +84,11 @@ function setupBlurButton() {
 
 function setupBlackoutButton() {
     const blackout = document.getElementById("blackoutButton")
-    blackout.addEventListener("click", () => {
+    blackout.addEventListener("click", async () => {
         document.getElementById("select").classList.add("hidden");
         document.getElementById("blackout").classList.remove("hidden");
+
+        await startNewRound();
         loadPoke("pokeSprite2")
     })
 }
@@ -147,6 +152,17 @@ function setupSubmitButton() {
 
             const isCorrect = checkAnswer(userGuess);
 
+            const activeCard = document.querySelector(
+                "#blur:not(.hidden), #blackout:not(.hidden), #backBlur:not(.hidden), #backBlackout:not(.hidden)"
+            )
+
+            if (!activeCard) return;
+
+            let spriteType = "front_default";
+            if (activeCard.id === "backBlur" || activeCard.id === "backBlackout") {
+                spriteType = "back_default";
+            }
+
             setTimeout(async () => {
                 document.body.classList.remove(
                     "bg-green-500/50",
@@ -155,7 +171,7 @@ function setupSubmitButton() {
                 inputs[index].value = "";
                 
                 await startNewRound();
-                loadPoke(`pokeSprite${index || ""}`)
+                loadPoke(activeCard.querySelector("img").id, spriteType);
             }, 1000)
         })
     })
