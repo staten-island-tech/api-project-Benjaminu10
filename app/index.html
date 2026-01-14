@@ -1,102 +1,124 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>app</title>
-  </head>
-  <body class="">
-    <div id="app" tabindex="0">
-      <h1 id="title" class="text-center">Whos That Pokemon?</h1>
-    </div>
-    <h2 class="text-3xl font-bold underline" id="api-response"></h2>
-    <div id="select" class="hidden">
-      <h1 id="title">Whos That Pokemon?</h1>
-        <div id="buttonContainer" class="flex flex-wrap">
-          <button id="blurButton">Blur</button>
-          <button id="blackoutButton">Blackout</button>
-          <button id="bblurButton">Back Blur</button>
-          <button id="bblackoutButton">Back Blackout</button>
-          <button id="criesButton">Cries</button>
-        </div>
-    </div>
-    <div id="blur" class="hidden">
-      <img src="" alt="" id="pokeSprite" class="w-150 blur-xl">
-      <label class="input">
-        <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.3-4.3"></path>
-          </g>
-        </svg>
-        <input class= "search" type="search" required placeholder="Guess" />
-      </label>
-      <ul class="suggestions">
 
-      </ul>
-      <button class="guess">Submit</button>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>app</title>
+</head>
+
+<body class="body bg-slate-900 text-slate-100 min-h-screen flex flex-col items-center justify-center">
+
+  <div id="app" tabindex="0" class="flex flex-col items-center gap-6">
+    <h1 id="title" class="text-5xl font-extrabold tracking-tight">
+      Who's That Pokémon?
+    </h1>
+    <h2 id="enter" class="text-slate-400 animate-pulse">
+      Press ENTER to Start
+    </h2>
+  </div>
+
+  <h2 class="text-3xl font-bold underline" id="api-response"></h2>
+
+  <div id="select" class="hidden flex flex-col items-center gap-8 mt-10">
+    <h1 id="title" class="text-4xl font-bold">
+      Choose a Mode
+    </h1>
+
+    <div id="buttonContainer" class="flex flex-wrap gap-4 justify-center">
+      <button id="blurButton" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 transition shadow-lg">
+        Blur
+      </button>
+      <button id="blackoutButton" class="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-500 transition shadow-lg">
+        Blackout
+      </button>
+      <button id="bblurButton" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 transition shadow-lg">
+        Back Blur
+      </button>
+      <button id="bblackoutButton" class="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-500 transition shadow-lg">
+        Back Blackout
+      </button>
     </div>
-    <div id="blackout" class="hidden">
-      <img src="" alt="" id="pokeSprite2" class="w-150 brightness-0">
-      <label class="input">
-        <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.3-4.3"></path>
-          </g>
-        </svg>
-        <input class= "search" type="search" required placeholder="Guess" />
-      </label>
-      <ul class="suggestions">
-      
-      </ul>
-    </div>
-    <div id="backBlur" class="hidden">
-      <img src="" alt="" id="pokeSprite3" class="w-150 blur-xl ">
-      <label class="input">
-        <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.3-4.3"></path>
-          </g>
-        </svg>
-        <input class= "search" type="search" required placeholder="Guess" />
-      </label>
-      <ul class="suggestions">
-      
-      </ul>
-    </div>
-    <div id="backBlackout" class="hidden">
-      <img src="" alt="" id="pokeSprite4" class="w-150 brightness-0">
-      <label class="input">
-        <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.3-4.3"></path>
-          </g>
-        </svg>
-        <input class= "search" type="search" required placeholder="Guess" />
-      </label>
-      <ul class="suggestions">
-      
-      </ul>
-    </div>
-    <div id="cries" class="hidden">
-      <audio controls id="criesAudio" src=""></audio>
-      <label class="input">
-        <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.3-4.3"></path>
-          </g>
-        </svg>
-        <input class= "search" type="search" required placeholder="Guess" />
-      </label>
-      <ul class="suggestions">
-      
-      </ul>
-    </div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+  </div>
+
+  <div id="blur"
+    class="hidden bg-slate-800 p-10 rounded-2xl shadow-2xl flex flex-col items-center gap-8 mt-10 w-[28rem] md:w-[32rem]">
+    <img src="" alt="" id="pokeSprite" class="w-72 md:w-80 blur-xl select-none">
+
+    <label class="input flex items-center gap-3 bg-slate-700 px-5 py-3 rounded-lg w-full">
+      <svg class="h-5 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </g>
+      </svg>
+      <input class="search bg-transparent outline-none placeholder-slate-400 flex-1" type="search" required
+        placeholder="Guess" />
+    </label>
+
+    <ul class="suggestions bg-slate-700 rounded-lg w-full text-left"></ul>
+
+    <button class="guess px-8 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 transition shadow text-lg">
+      Submit
+    </button>
+  </div>
+
+  <div id="blackout"
+    class="hidden bg-slate-800 p-10 rounded-2xl shadow-2xl flex flex-col items-center gap-8 mt-10 w-[28rem] md:w-[32rem]">
+    <img src="" alt="" id="pokeSprite2" class="w-72 md:w-80 brightness-0 select-none">
+
+    <label class="input flex items-center gap-3 bg-slate-700 px-5 py-3 rounded-lg w-full">
+      <svg class="h-5 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </g>
+      </svg>
+      <input class="search bg-transparent outline-none placeholder-slate-400 flex-1" type="search" required
+        placeholder="Guess" />
+    </label>
+
+    <ul class="suggestions bg-slate-700 rounded-lg w-full text-left"></ul>
+
+    <button class="guess px-8 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 transition shadow text-lg">
+      Submit
+    </button>
+  </div>
+
+  <div id="backBlur"
+    class="hidden bg-slate-800 p-10 rounded-2xl shadow-2xl flex flex-col items-center gap-8 mt-10 w-[28rem] md:w-[32rem]">
+    <img src="" alt="" id="pokeSprite3" class="w-72 md:w-80 blur-xl select-none">
+
+    <label class="input flex items-center gap-3 bg-slate-700 px-5 py-3 rounded-lg w-full">
+      <input class="search bg-transparent outline-none placeholder-slate-400 flex-1" type="search" required
+        placeholder="Guess" />
+    </label>
+
+    <ul class="suggestions bg-slate-700 rounded-lg w-full text-left"></ul>
+
+    <button class="guess px-8 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 transition shadow text-lg">
+      Submit
+    </button>
+  </div>
+
+  <div id="backBlackout"
+    class="hidden bg-slate-800 p-10 rounded-2xl shadow-2xl flex flex-col items-center gap-8 mt-10 w-[28rem] md:w-[32rem]">
+    <img src="" alt="" id="pokeSprite4" class="w-72 md:w-80 brightness-0 select-none">
+
+    <label class="input flex items-center gap-3 bg-slate-700 px-5 py-3 rounded-lg w-full">
+      <input class="search bg-transparent outline-none placeholder-slate-400 flex-1" type="search" required
+        placeholder="Guess" />
+    </label>
+
+    <ul class="suggestions bg-slate-700 rounded-lg w-full text-left"></ul>
+
+    <button class="guess px-8 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 transition shadow text-lg">
+      Submit
+    </button>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
 </html>

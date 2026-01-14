@@ -18,8 +18,15 @@ import './style.css';
 
 getData('pikachu'); */
 
+let currentpoke = null
+
+async function startNewRound() {
+    currentpoke = await randomPoke();
+    console.log("New Pokémon:", currentpoke.name);
+}
+
 async function randomPoke() {
-    let randomId = Math.floor(Math.random() * 1025);
+    let randomId = Math.floor(Math.random() * 1025) + 1;
     try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
         if (!response.ok) {
@@ -35,24 +42,10 @@ async function randomPoke() {
 
 
 async function loadPoke(id, spriteType) {
-    const currentpoke = await randomPoke();
-
     if (!currentpoke) {
         return;
     } else {
         document.getElementById(`${id}`).src = currentpoke.sprites[spriteType] || currentpoke.sprites.front_default;
-        console.log(currentpoke);
-    }
-
-}
-
-async function loadCry(id) {
-    const currentpoke = await randomPoke();
-
-    if (!currentpoke) {
-        return;
-    } else {
-        document.getElementById(`${id}`).src = currentpoke.cries.latest;
         console.log(currentpoke);
     }
 
@@ -77,9 +70,11 @@ function setupTitleScreen() {
 
 function setupBlurButton() {
     const blur = document.getElementById("blurButton");
-    blur.addEventListener("click", () => {
+    blur.addEventListener("click", async () => {
         document.getElementById("select").classList.add("hidden");
         document.getElementById("blur").classList.remove("hidden");
+
+        await startNewRound();
         loadPoke("pokeSprite")
     });
 }
@@ -95,19 +90,74 @@ function setupBlackoutButton() {
 
 function setupBlurButton2() {
     const blur = document.getElementById("bblurButton");
-    blur.addEventListener("click", () => {
+    blur.addEventListener("click", async () => {
         document.getElementById("select").classList.add("hidden");
         document.getElementById("backBlur").classList.remove("hidden");
+
+        await startNewRound();
         loadPoke("pokeSprite3", "back_default")
     });
 }
 
 function setupBlackoutButton2() {
     const blackout = document.getElementById("bblackoutButton")
-    blackout.addEventListener("click", () => {
+    blackout.addEventListener("click", async () => {
         document.getElementById("select").classList.add("hidden");
         document.getElementById("backBlackout").classList.remove("hidden");
+
+        await startNewRound();
         loadPoke("pokeSprite4", "back_default")
+    })
+}
+
+function checkAnswer(answer) {
+    if (!currentpoke) return false;
+
+    const isCorrect = answer.toLowerCase() === currentpoke.name.toLowerCase();
+
+    const activeCard = document.querySelector(
+        "#blur:not(.hidden), #blackout:not(.hidden), #backBlur:not(.hidden), #backBlackout:not(.hidden)"
+    )
+
+
+    if (!activeCard) return false;
+
+    activeCard.classList.remove("ring-4", "ring-green-400", "ring-red-400");
+
+    if (isCorrect) {
+        activeCard.classList.add("ring-4", "ring-green-400");
+    } else {
+        activeCard.classList.add("ring-4", "ring-red-400");
+    }
+
+    setTimeout(() => {
+        activeCard.classList.remove("ring-4", "ring-green-400", "ring-red-400");
+    }, 3000)
+}
+
+function setupSubmitButton() {
+    const buttons = document.querySelectorAll(".guess")
+    const inputs = document.querySelectorAll(".search")
+
+    buttons.forEach((button, index) => {
+        button.addEventListener("click", () => {
+            const userGuess = inputs[index].value.trim();
+
+            if (!userGuess) return;
+
+            const isCorrect = checkAnswer(userGuess);
+
+            setTimeout(async () => {
+                document.body.classList.remove(
+                    "bg-green-500/50",
+                    "bg-red-500/50"
+                );
+                inputs[index].value = "";
+                
+                await startNewRound();
+                loadPoke(`pokeSprite${index || ""}`)
+            }, 1000)
+        })
     })
 }
 
@@ -164,19 +214,11 @@ searchInputs.forEach((input, index) => {
 
 })
 
-function setupCriesButton() {
-    const cries = document.getElementById("criesButton")
-    cries.addEventListener("click", () => {
-        document.getElementById("select").classList.add("hidden");
-        document.getElementById("cries").classList.remove("hidden");
-        loadCry("criesAudio")
-    })
-}
 
 setupBlurButton()
 setupBlackoutButton()
 setupBlurButton2()
 setupBlackoutButton2()
-setupCriesButton()
 setupTitleScreen()
 pokeList()
+setupSubmitButton()
